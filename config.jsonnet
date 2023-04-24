@@ -1,12 +1,10 @@
 local package = (import './package.libsonnet') + {
   values+:: {
     common+: {
-      namespace: 'monitoring',
+      namespace: 'nfs-client',
     },
   },
 };
 
-{
-  [name]: package[name]
-  for name in std.objectFields(package)
-}
+{ ['setup/' + name]: package.rbac[name] for name in std.objectFields(package.rbac) } +
+{ [name]: package.provisioner[name] for name in std.objectFields(package.provisioner) }
